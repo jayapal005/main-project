@@ -1,0 +1,26 @@
+.imt img {
+height: 10rem;
+transition: all 1s ease;
+}
+.imt img:hover{
+    transform: scale(1.25);
+}
+
+
+.img img{
+    height: 10rem;
+    transition: all 1s ease;
+}
+.img img:hover{
+    transform: scale(1.25);
+}
+
+
+
+.carouselimg2 img{
+    transition: all 1s ease;
+     width: 25rem;
+}
+.carouselimg2 img:hover{
+    transform: scale(1.25);
+}

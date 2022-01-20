@@ -1,0 +1,6 @@
+.backgroundImage{
+    background-image:linear-gradient(rgba(0 , 0 , 0 ,0.3),rgba(0 , 0 , 0 ,0.6)), url(https://res.cloudinary.com/urbanclap/image/upload/images/growth/home-screen/1615375782838-f890f8.jpeg);
+    height: 38rem;
+    background-size: cover;
+    
+}

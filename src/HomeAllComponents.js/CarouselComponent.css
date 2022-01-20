@@ -1,0 +1,9 @@
+.CarouselComponent img{
+    width: 22rem;
+    
+    transition: all 1s ease;
+
+}
+.CarouselComponent img:hover{
+    transform: scale(1.25);
+}

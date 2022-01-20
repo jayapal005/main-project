@@ -1,23 +1,50 @@
 import logo from './logo.svg';
 import './App.css';
+import { Row, Col } from "reactstrap";
+import Home from './HomeAllComponents.js/home';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 function App() {
+  const[locationData, setLocationData] = useState([]);
+  const[locationObject,setLocationObject] = useState({})
+  const getMapData = async() => {
+    let getData = await axios.get("https://rcz-backend-arvinth.herokuapp.com/api/mapData",{
+  params:{
+    latitude : locationData[0],
+    longitude : locationData[1]
+  }
+  
+  
+    });
+    setLocationObject(await getData.data);
+  }
+  
+  
+  useEffect(()=>{
+    if (locationData.length>0){ getMapData();}
+   
+    
+  },[locationData])
+      function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            console.log("Geolocation is not supported by this browser.");
+          }
+        }
+      function showPosition(position){
+          setLocationData([ position.coords.latitude , position.coords.longitude]);
+      }
+      useEffect(()=>{
+          getLocation();
+          
+      },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" >
+       {locationData}
+      <Home loctionFromApp = {locationObject}/>
+     
     </div>
   );
 }
