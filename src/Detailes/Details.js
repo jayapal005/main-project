@@ -5,12 +5,12 @@ import VerticalTabs from './TabSwichers';
 function Details(props) {
     return (
        <Row>
-           <Col lg={3}>
+           <Col >
                <Row>
                    <VerticalTabs/>
                </Row>
            </Col>
-           <Col lg={5}></Col>
+           
        </Row>
     );
 }

@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useEffect, useState } from 'react'
+import CardFile from './CardFile';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -46,6 +47,9 @@ export default function VerticalTabs() {
     const [value, setValue] = React.useState(0);
     const [categoriesTotaldata,setcategoriesTotaldata]= useState([]);
     const[removeDups,setremoveDups] = useState([]);
+    const[contentData, setcontentData] = useState([]);
+
+
     useEffect(() => {
         let getData = async () => {
             let dataGot = await axios.get("https://rcz-backend-arvinth.herokuapp.com/api/getGenieRecordsByAllCategories")
@@ -59,8 +63,13 @@ export default function VerticalTabs() {
         console.log(tofilter)
             setremoveDups(toRemoveDups.filter(e=>{
                 return e==tofilter;
-            }))
+            }));
+            let contentFilter = await dataGot.data.filter(e=>{
+                return e.mainCategory == tofilter
+            })
+            setcontentData(contentFilter)
             setcategoriesTotaldata(await dataGot.data)
+            console.log(categoriesTotaldata)
             
         }
       getData();
@@ -86,34 +95,17 @@ export default function VerticalTabs() {
             {removeDups.length ? removeDups.map((e,index)=>(
                 <Tab label={e} {...a11yProps(index)} />
             )) :(<div></div>)}
-                {/* <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
-                <Tab label="Item Four" {...a11yProps(3)} />
-                <Tab label="Item Five" {...a11yProps(4)} />
-                <Tab label="Item Six" {...a11yProps(5)} />
-                <Tab label="Item Seven" {...a11yProps(6)} /> */}
+               
             </Tabs>
             <TabPanel value={value} index={0}>
-                Item One
+                {contentData.map(e=>(
+            
+            <CardFile jobFromData={e.job} priceFromeData={e.price} ratingFromData={e.rating} detailsFromData={e.description}/>
+
+                ))}
+                
             </TabPanel>
-            <TabPanel value={value} index={1}>
-                Item Two
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                Item Four
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                Item Five
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-                Item Six
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-                Item Seven
-            </TabPanel>
+           
         </Box>
     );
 }
